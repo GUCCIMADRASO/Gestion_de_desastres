@@ -14,6 +14,10 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
+    public Usuario() {
+
+    }
+
     public boolean iniciarSesion(String email, String contrasena) {
         if (this.email.equals(email) && this.contrasena.equals(contrasena)) {
             sesionActiva = true;
