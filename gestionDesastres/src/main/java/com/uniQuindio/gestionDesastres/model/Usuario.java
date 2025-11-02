@@ -1,52 +1,51 @@
 package com.uniQuindio.gestionDesastres.model;
 
-public abstract class Usuario {
+public class Usuario {
+    private String id;
+    private String nombre;
+    private String email;
+    private String contrasena;
+    private boolean sesionActiva = false;
 
-    protected String nombre;
-    protected String id;
-    protected String email;
-    protected String contrasena;
-
-
-    public Usuario(String nombre, String id, String email, String contrasena) {
-        this.nombre = nombre;
+    public Usuario(String id, String nombre, String email, String contrasena) {
         this.id = id;
+        this.nombre = nombre;
         this.email = email;
         this.contrasena = contrasena;
     }
-    public Usuario() {
-    }
 
-    // Métodos comunes
     public boolean iniciarSesion(String email, String contrasena) {
-        return this.email.equals(email) && this.contrasena.equals(contrasena);
+        if (this.email.equals(email) && this.contrasena.equals(contrasena)) {
+            sesionActiva = true;
+            System.out.println(nombre + " ha iniciado sesión.");
+            return true;
+        }
+        System.out.println("Error de autenticación.");
+        return false;
     }
 
     public void cerrarSesion() {
-        System.out.println(nombre + " ha cerrado sesión.");
+        if (sesionActiva) {
+            sesionActiva = false;
+            System.out.println(nombre + " ha cerrado sesión.");
+        } else {
+            System.out.println("No hay sesión activa.");
+        }
     }
 
-
+    public boolean isSesionActiva() {
+        return sesionActiva;
+    }
+    public String getContrasena() {
+        return contrasena;
+    }
+    public String GetEmail() {
+        return email;
+    }
     public String getNombre() {
         return nombre;
     }
-
     public String getId() {
         return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
-    public void getContrasena() {
-        return;
     }
 }
