@@ -1,6 +1,8 @@
 package com.uniQuindio.gestionDesastres.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Desastre {
 
@@ -11,6 +13,7 @@ public class Desastre {
     private int personasAfectadas;
     private LocalDate fecha;
     private Ubicacion ubicacion;
+    private List<Equipo> equiposAsignados;
 
     public Desastre(int magnitud, String nombre, String idDesastre, TipoDesastre tipoDesastre,
                     int personasAfectadas, LocalDate fecha,Ubicacion ubicacion) {
@@ -21,10 +24,12 @@ public class Desastre {
         this.personasAfectadas = personasAfectadas;
         this.fecha = fecha;
         this.ubicacion = ubicacion;
+        this.equiposAsignados = new ArrayList<Equipo>();
     }
 
     public Desastre(){};
 
+    // metodo para calcular la prioridad del desastre segun la magnitud o la cantidad de personas afectadas
     public String asignarPrioridad(){
         if (magnitud >= 4 || personasAfectadas > 1000) {
             return "Alta";
@@ -34,6 +39,45 @@ public class Desastre {
             return "Baja";
         }
     }
+
+    //metodo para asignarle un equipo al desastre
+    public void asignarEquipo(Equipo equipo){
+
+        int personalRequerido=0;
+        String prioridad=asignarPrioridad();
+        switch (prioridad) {
+            case "Alta" -> personalRequerido = 20;
+            case "Media" -> personalRequerido = 10;
+            case "Baja" -> personalRequerido= 5;
+        }
+        if (equipo.getIntegrantesDisponibles() >= personalRequerido) {
+            equipo.setIntegrantesDisponibles(equipo.getIntegrantesDisponibles() - personalRequerido);
+
+            equiposAsignados.add(equipo);
+
+            System.out.println("Equipo " + equipo.getTipoEquipo() + " asignado al desastre " + nombre + " " +
+                    "Integrantes usados: " + personalRequerido +
+                    ". Restan: " + equipo.getIntegrantesDisponibles());
+        } else {
+            System.out.println("No hay suficientes integrantes en el equipo " +  equipo.getTipoEquipo() +
+                    " para atender el desastre " + nombre + " Requiere: " + personalRequerido +
+            ", disponibles: " + equipo.getIntegrantesDisponibles());
+        }
+
+    }
+
+    //metodo para mostrar los equipos asignados
+    public void mostrarEquiposAsignados() {
+        System.out.println("Equipos asignados al desastre " + nombre);
+        if (equiposAsignados.isEmpty()) {
+            System.out.println("Ningún equipo asignado.");
+        } else {
+            for (Equipo equipo : equiposAsignados) {
+                System.out.println(" - " + equipo);
+            }
+        }
+    }
+
 
     public int getMagnitud() {
         return magnitud;
@@ -89,5 +133,13 @@ public class Desastre {
 
     public void setUbicacion(Ubicacion ubicacion) {
         this.ubicacion = ubicacion;
+    }
+
+    public List<Equipo> getEquiposAsignados() {
+        return equiposAsignados;
+    }
+
+    public void setEquiposAsignados(List<Equipo> equiposAsignados) {
+        this.equiposAsignados = equiposAsignados;
     }
 }

@@ -2,12 +2,12 @@ package com.uniQuindio.gestionDesastres.model;
 
 public class Equipo {
     private String idEquipo;
-    private int disponible;
+    private int integrantesDisponibles;
     private TipoEquipo tipoEquipo;
 
-    public Equipo(String idEquipo, int disponible, TipoEquipo tipoEquipo) {
+    public Equipo(String idEquipo, int integrantesDisponibles, TipoEquipo tipoEquipo) {
         this.idEquipo = idEquipo;
-        this.disponible = disponible;
+        this.integrantesDisponibles = integrantesDisponibles;
         this.tipoEquipo = tipoEquipo;
     }
 
@@ -21,12 +21,12 @@ public class Equipo {
         this.idEquipo = idEquipo;
     }
 
-    public int getDisponible() {
-        return disponible;
+    public int getIntegrantesDisponibles() {
+        return integrantesDisponibles;
     }
 
-    public void setDisponible(int disponible) {
-        this.disponible = disponible;
+    public void setIntegrantesDisponibles(int integrantesDisponibles) {
+        this.integrantesDisponibles = integrantesDisponibles;
     }
 
     public TipoEquipo getTipoEquipo() {
@@ -35,5 +35,14 @@ public class Equipo {
 
     public void setTipoEquipo(TipoEquipo tipoEquipo) {
         this.tipoEquipo = tipoEquipo;
+    }
+
+    @Override
+    public String toString() {
+        return "Equipo{" +
+                "idEquipo='" + idEquipo + '\'' +
+                ", integrantesDisponibles=" + integrantesDisponibles +
+                ", tipoEquipo=" + tipoEquipo +
+                '}';
     }
 }
