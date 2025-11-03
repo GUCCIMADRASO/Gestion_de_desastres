@@ -1,18 +1,19 @@
 package com.uniQuindio.gestionDesastres.model;
-
-import com.uniQuindio.gestionDesastres.model.estructuras.listaSimpleEnlazada.ListaSimpleEnlazada;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Departamento {
     private String nombre;
-    ListaSimpleEnlazada<Ciudad> ciudades;
+    private List<Ciudad> ciudades;
 
-    public Departamento(String nombre,ListaSimpleEnlazada<Ciudad> ciudades) {
+    public Departamento(String nombre, List<Ciudad> ciudades) {
         this.nombre = nombre;
         this.ciudades = ciudades;
     }
 
-    public Departamento() {}
-
+    public Departamento() {
+        this.ciudades = new ArrayList<>();
+    }
 
     public String getNombre() {
         return nombre;
@@ -22,11 +23,22 @@ public class Departamento {
         this.nombre = nombre;
     }
 
-    public ListaSimpleEnlazada<Ciudad> getCiudades() {
+    public List<Ciudad> getCiudades() {
         return ciudades;
     }
 
-    public void setCiudades(ListaSimpleEnlazada<Ciudad> ciudades) {
+    public void setCiudades(List<Ciudad> ciudades) {
         this.ciudades = ciudades;
+    }
+
+    public void agregarCiudad(Ciudad ciudad) {
+        this.ciudades.add(ciudad);
+    }
+
+    public void mostrarCiudades() {
+        System.out.println("Ciudades del departamento " + nombre + ":");
+        for (Ciudad c : ciudades) {
+            System.out.println("- " + c.getNombre());
+        }
     }
 }
