@@ -27,15 +27,19 @@ public class ColaPrioridad<T extends Comparable<T>> {
     }
 
     // Mostrar la cola actual
-    public void mostrarCola() {
-        System.out.println("Cola de prioridad actual:");
+    public String mostrarCola() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Cola de prioridad actual:\n");
+
         if (colaPrioridad.isEmpty()) {
-            System.out.println("Vacía");
+            sb.append("Vacía\n");
         } else {
             for (T elemento : colaPrioridad) {
-                System.out.println("- " + elemento);
+                sb.append("- ").append(elemento).append("\n");
             }
         }
+        System.out.print(sb.toString()); // opcional, si igual quieres mostrarlo en consola
+        return sb.toString();
     }
 
     // Saber si la cola está vacía

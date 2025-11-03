@@ -159,4 +159,18 @@ public class Desastre implements Comparable<Desastre>{
     public void setEquiposAsignados(List<Equipo> equiposAsignados) {
         this.equiposAsignados = equiposAsignados;
     }
+
+    @Override
+    public String toString() {
+        return "Desastre{" +
+                "magnitud=" + magnitud +
+                ", nombre='" + nombre + '\'' +
+                ", idDesastre='" + idDesastre + '\'' +
+                ", tipoDesastre=" + tipoDesastre +
+                ", personasAfectadas=" + personasAfectadas +
+                ", fecha=" + fecha +
+                ", ubicacion=" + ubicacion +
+                ", equiposAsignados=" + equiposAsignados +
+                '}';
+    }
 }

@@ -4,5 +4,5 @@ public enum TipoDesastre {
     INCENDIO,
     DERRUMBE,
     TEMBLOR,
-    INUNCADICION
+    INUNDACION
 }

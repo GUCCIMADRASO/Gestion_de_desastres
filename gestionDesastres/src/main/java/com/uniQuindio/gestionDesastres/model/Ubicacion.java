@@ -5,16 +5,12 @@ public class Ubicacion {
     private String nombre;
     private String calle;
     private String carrera;
-    private Ruta entrada;
-    private Ruta salida;
 
-    public Ubicacion(String id, String nombre, String calle, String carrera,Ruta entrada,Ruta salida) {
+    public Ubicacion(String id, String nombre, String calle, String carrera) {
         this.id = id;
         this.nombre = nombre;
         this.calle = calle;
         this.carrera = carrera;
-        this.entrada = entrada;
-        this.salida = salida;
     }
 
     public  Ubicacion() {}
@@ -49,21 +45,5 @@ public class Ubicacion {
 
     public void setCarrera(String carrera) {
         this.carrera = carrera;
-    }
-
-    public Ruta getEntrada() {
-        return entrada;
-    }
-
-    public void setEntrada(Ruta entrada) {
-        this.entrada = entrada;
-    }
-
-    public Ruta getSalida() {
-        return salida;
-    }
-
-    public void setSalida(Ruta salida) {
-        this.salida = salida;
     }
 }
