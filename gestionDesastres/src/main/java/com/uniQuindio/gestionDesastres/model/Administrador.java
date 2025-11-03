@@ -13,18 +13,53 @@ public class Administrador extends Usuario {
         super();
     }
 
-
     public void manejoRecursos(Recurso recurso, int cantidad) {
         recurso.agregarCantidad(cantidad);
         System.out.println("Recurso actualizado: " + recurso);
     }
 
-    public void asignarRecurso(Recurso recurso, Desastre desastre, int cantidad) {
-        if (recurso.consumir(cantidad)) {
-            System.out.println("Asignado " + cantidad + " de " + recurso.getNombre() +
-                    " al desastre " + desastre.getNombre());
-        } else {
-            System.out.println("No hay suficientes recursos de " + recurso.getNombre());
+    public void asignarRecursos(ColaPrioridad<Desastre> colaPrioridad, List<Recurso> recursosDisponibles) {
+        System.out.println("=== ASIGNACIÓN DE RECURSOS SEGÚN PRIORIDAD ===");
+
+        while (!colaPrioridad.estaVacia()) {
+            Desastre desastre = colaPrioridad.atenderSiguiente();
+            if (desastre == null) break;
+
+            System.out.println("\nAtendiendo desastre: " + desastre.getNombre() +
+                    " | Prioridad: " + desastre.asignarPrioridad() +
+                    " | Personas afectadas: " + desastre.getPersonasAfectadas());
+
+            for (Recurso recurso : recursosDisponibles) {
+                int cantidadNecesaria = 0;
+
+                switch (recurso.getTipo()) {
+                    case ALIMENTO:
+                        cantidadNecesaria = desastre.getPersonasAfectadas() * 3;
+                        break;
+                    case MEDICAMENTO:
+                        cantidadNecesaria = desastre.getPersonasAfectadas();
+                        break;
+                    default:
+                        cantidadNecesaria = 0;
+                        break;
+                }
+
+                if (cantidadNecesaria > 0) {
+                    if (recurso.getCantidad() >= cantidadNecesaria) {
+                        recurso.consumir(cantidadNecesaria);
+                        System.out.println(" Asignado " + cantidadNecesaria + " de " + recurso.getNombre());
+                    } else if (recurso.getCantidad() > 0) {
+                        int disponible = recurso.getCantidad();
+                        recurso.consumir(disponible);
+                        System.out.println(" Solo se pudieron asignar " + disponible + " de " + recurso.getNombre()
+                                + " (faltan " + (cantidadNecesaria - disponible) + ")");
+                    } else {
+                        System.out.println("No hay disponibilidad de " + recurso.getNombre());
+                    }
+                }
+            }
+
+            System.out.println("→ Asignación completada para el desastre: " + desastre.getNombre());
         }
     }
 
@@ -42,7 +77,6 @@ public class Administrador extends Usuario {
                     " | Prioridad: " + d.asignarPrioridad() +
                     " | Equipos: " + d.getEquiposAsignados().size()+
                     " | Recursos: " + d.getPersonasAfectadas());
-
         }
     }
 }

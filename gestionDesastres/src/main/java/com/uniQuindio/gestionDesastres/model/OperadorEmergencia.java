@@ -25,13 +25,26 @@ public class OperadorEmergencia extends Usuario {
                 " | Magnitud: " + nuevaMagnitud +
                 " | Personas afectadas: " + nuevasPersonasAfectadas);
     }
-    public void priorizarEvacuacion(Desastre desastre) {
-        String prioridad = desastre.asignarPrioridad();
-        System.out.println("Evacuación del desastre " + desastre.getNombre() +
-                " tiene prioridad: " + prioridad);
-    }
 
     public void coordinarRecursos(Desastre desastre, Equipo equipo) {
         desastre.asignarEquipo(equipo);
     }
+    public void gestionarEvacuaciones(List<Desastre> desastres) {
+        ColaPrioridad<Desastre> colaEvacuacion = new ColaPrioridad<>();
+        for (Desastre d : desastres) {
+            colaEvacuacion.agregarElemento(d);
+        }
+
+        while (!colaEvacuacion.estaVacia()) {
+            Desastre siguiente = colaEvacuacion.atenderSiguiente();
+            if (siguiente != null) {
+                System.out.println("➡️ Evacuando zona afectada: " + siguiente.getNombre() +
+                        " | Prioridad: " + siguiente.asignarPrioridad() +
+                        " | Personas afectadas: " + siguiente.getPersonasAfectadas());
+            }
+        }
+
+        System.out.println("Todas las evacuaciones fueron gestionadas.");
+    }
+
 }
