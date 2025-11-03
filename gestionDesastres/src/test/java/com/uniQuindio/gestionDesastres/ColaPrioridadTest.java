@@ -20,9 +20,9 @@ public class ColaPrioridadTest {
         cola = new ColaPrioridad<>();
 
         // Crear ubicaciones
-        cali = new Ubicacion("U1", "Cali", "5", "10", null, null);
-        armenia = new Ubicacion("U2", "Armenia", "12", "8", null, null);
-        pereira = new Ubicacion("U3", "Pereira", "9", "4", null, null);
+        cali = new Ubicacion("U1", "Cali", "5", "10");
+        armenia = new Ubicacion("U2", "Armenia", "12", "8");
+        pereira = new Ubicacion("U3", "Pereira", "9", "4");
 
         // Crear desastres asociados a ubicaciones
         Desastre d1 = new Desastre(5, "Inundación", "D1", TipoDesastre.INUNDACION, 800, LocalDate.now(), cali);
