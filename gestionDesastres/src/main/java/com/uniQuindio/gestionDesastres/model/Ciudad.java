@@ -1,20 +1,23 @@
 package com.uniQuindio.gestionDesastres.model;
 
-import com.uniQuindio.gestionDesastres.model.estructuras.listaSimpleEnlazada.ListaSimpleEnlazada;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Ciudad {
     private String nombre;
     private Departamento departamento;
-    ListaSimpleEnlazada<Barrio> barrios;
+    private List<Barrio> barrios;
 
-    public Ciudad(String nombre,Departamento departamento,ListaSimpleEnlazada<Barrio> barrios) {
+    public Ciudad(String nombre, Departamento departamento, List<Barrio> barrios) {
         this.nombre = nombre;
         this.departamento = departamento;
-        this.barrios = barrios;
+        this.barrios = new ArrayList<>();
     }
 
-    public Ciudad() {}
-
+    // Constructor por defecto
+    public Ciudad() {
+    }
+    // Getters y Setters
     public String getNombre() {
         return nombre;
     }
@@ -31,11 +34,22 @@ public class Ciudad {
         this.departamento = departamento;
     }
 
-    public ListaSimpleEnlazada<Barrio> getBarrios() {
+    public List<Barrio> getBarrios() {
         return barrios;
     }
 
-    public void setBarrios(ListaSimpleEnlazada<Barrio> barrios) {
+    public void setBarrios(List<Barrio> barrios) {
         this.barrios = barrios;
+    }
+
+    public void agregarBarrio(Barrio barrio) {
+        this.barrios.add(barrio);
+    }
+
+    public void mostrarBarrios() {
+        System.out.println("Barrios de la ciudad " + nombre + ":");
+        for (Barrio b : barrios) {
+            System.out.println("- " + b.getNombre());
+        }
     }
 }

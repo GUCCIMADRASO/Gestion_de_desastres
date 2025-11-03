@@ -9,10 +9,10 @@ public class Departamento {
     public Departamento(String nombre, List<Ciudad> ciudades) {
         this.nombre = nombre;
         this.ciudades = ciudades;
+        this.ciudades = new ArrayList<>();
     }
 
     public Departamento() {
-        this.ciudades = new ArrayList<>();
     }
 
     public String getNombre() {
