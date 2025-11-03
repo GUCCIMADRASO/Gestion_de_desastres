@@ -43,7 +43,7 @@ public class Usuario {
     public String getContrasena() {
         return contrasena;
     }
-    public String GetEmail() {
+    public String getEmail() {
         return email;
     }
     public String getNombre() {
