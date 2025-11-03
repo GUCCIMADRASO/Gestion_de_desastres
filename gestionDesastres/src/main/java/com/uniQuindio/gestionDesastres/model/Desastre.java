@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Desastre {
+public class Desastre implements Comparable<Desastre>{
 
     private int magnitud;
     private String nombre;
@@ -38,6 +38,23 @@ public class Desastre {
         } else {
             return "Baja";
         }
+    }
+
+    //metodo para asignarle un valor numerico a la prioridad
+    public int asignarNivelPrioridad(){
+        switch (asignarPrioridad()){
+            case "Alta": return 1;
+            case "Media": return 2;
+            default: return 3;
+        }
+    }
+
+    //metodo para comparar el desastre por prioridad
+    @Override
+    public int compareTo(Desastre otro) {
+        //los de menos numero tiene mayor prioridad
+        return Integer.compare(this.asignarNivelPrioridad(), otro.asignarNivelPrioridad());
+
     }
 
     //metodo para asignarle un equipo al desastre
