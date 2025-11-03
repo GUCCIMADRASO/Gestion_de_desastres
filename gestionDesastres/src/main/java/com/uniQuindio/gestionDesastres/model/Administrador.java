@@ -1,7 +1,7 @@
 package com.uniQuindio.gestionDesastres.model;
 
-
 import java.util.List;
+import java.util.Map;
 
 public class Administrador extends Usuario {
 
@@ -63,12 +63,34 @@ public class Administrador extends Usuario {
         }
     }
 
-    public Ruta definirRuta(Ubicacion origen, Ubicacion destino, float distancia) {
-        Ruta ruta = new Ruta(origen, destino, distancia);
-        System.out.println("Ruta creada de " + origen.getNombre() + " a " + destino.getNombre() +
-                " con distancia " + distancia + " km (peso: " + ruta.calcularPeso() + ")");
+    public Ruta definirRuta(GrafoDirigido grafo, Ubicacion origen, Ubicacion destino) {
+
+        Map<Ubicacion, Float> distancias = Dijkstra.calcularDistancias(grafo, origen);
+        Float distanciaMasCorta = distancias.get(destino);
+
+        if (distanciaMasCorta == null || distanciaMasCorta.isInfinite()) {
+            System.out.println("No existe una ruta entre " + origen.getNombre() + " y " + destino.getNombre());
+            return null;
+        }
+        List<Ubicacion> camino = Dijkstra.caminoMasCorto(grafo, origen, destino);
+
+        Ruta ruta = new Ruta(origen, destino, distanciaMasCorta);
+
+        System.out.println("Ruta óptima creada de " + origen.getNombre() + " a " + destino.getNombre());
+        System.out.println("Distancia total: " + distanciaMasCorta);
+        System.out.println("Peso: " + ruta.calcularPeso());
+        System.out.print("Camino más corto: ");
+
+        for (int i = 0; i < camino.size(); i++) {
+            System.out.print(camino.get(i).getNombre());
+            if (i < camino.size() - 1) System.out.print(" → ");
+        }
+
+        System.out.println();
+
         return ruta;
     }
+
 
     public void generarReporte(List<Desastre> desastres) {
         System.out.println("Reporte de Desastres Atendidos");

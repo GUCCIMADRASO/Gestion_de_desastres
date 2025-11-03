@@ -6,7 +6,7 @@ public class Ubicacion {
     private String calle;
     private String carrera;
 
-    public Ubicacion(String id, String nombre, String calle, String carrera, Object o, Object object) {
+    public Ubicacion(String id, String nombre, String calle, String carrera) {
         this.id = id;
         this.nombre = nombre;
         this.calle = calle;

@@ -14,10 +14,10 @@ public class DijkstraTest {
 
     @Test
     void calcularDistancias() {
-        Ubicacion a = new Ubicacion("A","A","C","R", null, null);
-        Ubicacion b = new Ubicacion("B","B","C","R", null, null);
-        Ubicacion c = new Ubicacion("C","C","C","R", null, null);
-        Ubicacion d = new Ubicacion("D","D","C","R", null, null);
+        Ubicacion a = new Ubicacion("A","A","C","R");
+        Ubicacion b = new Ubicacion("B","B","C","R");
+        Ubicacion c = new Ubicacion("C","C","C","R");
+        Ubicacion d = new Ubicacion("D","D","C","R");
 
         Ruta ab = new Ruta(a, b, 5f);
         Ruta ac = new Ruta(a, c, 10f);
