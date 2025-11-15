@@ -57,26 +57,7 @@ public class DesastreTest {
         assertTrue(desastre2.compareTo(desastre3) < 0, "Incendio debe ir antes que Derrumbe");
     }
 
-    @Test
-    void testAsignarEquipoConSuficientePersonal() {
-        int antes = equipo1.getIntegrantesDisponibles();
-        desastre1.asignarEquipo(equipo1);
 
-        assertTrue(equipo1.getIntegrantesDisponibles() < antes,
-                "Debe reducir el número de integrantes disponibles del equipo");
-        assertFalse(desastre1.getEquiposAsignados().isEmpty(), "El equipo debe haberse asignado al desastre");
-    }
-
-    @Test
-    void testAsignarEquipoSinSuficientePersonal() {
-        int antes = equipo2.getIntegrantesDisponibles();
-        desastre2.asignarEquipo(equipo2);
-
-        assertEquals(antes, equipo2.getIntegrantesDisponibles(),
-                "No debe cambiar los integrantes disponibles si no alcanza el personal");
-        assertTrue(desastre2.getEquiposAsignados().isEmpty(),
-                "No debe agregarse el equipo si no tiene personal suficiente");
-    }
 
 
 }

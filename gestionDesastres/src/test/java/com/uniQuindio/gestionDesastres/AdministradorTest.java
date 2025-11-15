@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.time.LocalDate;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -129,6 +130,7 @@ public class AdministradorTest {
         Ubicacion raizU = new Ubicacion("R", "Centro", "C0", "R0",TipoUbicacion.REFUGIO);
         Ubicacion barrioU = new Ubicacion("B", "Barrio", "C1", "R1",TipoUbicacion.REFUGIO);
 
+
         NodoDistribucion raiz = new NodoDistribucion(raizU);
         NodoDistribucion barrio = new NodoDistribucion(barrioU);
         raiz.agregarHijo(barrio);
@@ -168,4 +170,5 @@ public class AdministradorTest {
         assertTrue(salida.contains("Recursos restantes"));
         assertTrue(salida.contains("asignado") || salida.contains("asignado:"));
     }
+
 }

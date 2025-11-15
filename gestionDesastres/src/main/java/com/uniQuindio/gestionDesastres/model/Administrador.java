@@ -10,9 +10,12 @@ import java.util.List;
 import java.util.Map;
 
 public class Administrador extends Usuario {
+    private GrafoDirigido grafoRutas;
 
     public Administrador(String nombre, String id, String email, String contrasena) {
         super(nombre, id, email, contrasena);
+        this.grafoRutas = new GrafoDirigido();
+
     }
 
     public Administrador() {
@@ -80,6 +83,88 @@ public class Administrador extends Usuario {
 
             System.out.println("→ Asignación completada para el desastre: " + desastre.getNombre());
         }
+    }
+    //metodo para asignarle un equipo al desastre
+    public void asignarEquipo(Equipo equipo, Desastre desastre) {
+        List<Equipo> equiposAsignados = desastre.getEquiposAsignados();
+
+        // Calcular personal requerido según prioridad
+        int personalRequerido = 0;
+        String prioridad = desastre.asignarPrioridad();
+        switch (prioridad) {
+            case "Alta" -> personalRequerido = 20;
+            case "Media" -> personalRequerido = 10;
+            case "Baja" -> personalRequerido = 5;
+        }
+
+        System.out.println("\n INFORMACIÓN DEL DESASTRE:");
+        System.out.println("   • Desastre: " + desastre.getNombre());
+        System.out.println("   • Ubicación: " + desastre.getUbicacion().getNombre());
+        System.out.println("   • Prioridad: " + prioridad);
+        System.out.println("   • Personal requerido: " + personalRequerido + " integrantes");
+
+        System.out.println("\n INFORMACIÓN DEL EQUIPO:");
+        System.out.println("   • Tipo: " + equipo.getTipoEquipo());
+        System.out.println("   • Disponibles: " + equipo.getIntegrantesDisponibles() + " integrantes");
+
+        // Verificar disponibilidad de personal
+        if (equipo.getIntegrantesDisponibles() < personalRequerido) {
+            System.out.println("\n ASIGNACIÓN RECHAZADA:");
+            System.out.println("   No hay suficientes integrantes en el equipo " +
+                    equipo.getTipoEquipo() +
+                    " para atender el desastre " + desastre.getNombre());
+            System.out.println("   Requiere: " + personalRequerido +
+                    " | Disponibles: " + equipo.getIntegrantesDisponibles());
+            return;
+        }
+
+        // ═══════════ CALCULAR RUTA MÁS CORTA ═══════════
+        System.out.println("\n CALCULANDO RUTA MÁS CORTA");
+
+        Ubicacion origen = equipo.getUbicacion();
+        Ubicacion destino = desastre.getUbicacion();
+
+        // Usar algoritmo de Dijkstra para encontrar la ruta más corta
+        List<Ubicacion> rutaMasCorta = Dijkstra.caminoMasCorto(grafoRutas, origen, destino);
+
+        if (rutaMasCorta.isEmpty()) {
+            System.out.println("No existe ruta disponible desde " +
+                    origen.getNombre() + " hasta " + destino.getNombre());
+            System.out.println("No se puede asignar el equipo sin ruta de acceso");
+            return;
+        }
+
+        // Calcular distancia total
+        Map<Ubicacion, Float> distancias = Dijkstra.calcularDistancias(grafoRutas, origen);
+        float distanciaTotal = distancias.get(destino);
+
+        // Calcular tiempo estimado (asumiendo velocidad promedio de 40 km/h)
+        float tiempoEstimado = (distanciaTotal / 40) * 60; // en minutos
+
+        System.out.println("   ✓ Ruta encontrada:");
+        System.out.print("");
+        for (int i = 0; i < rutaMasCorta.size(); i++) {
+            System.out.print(rutaMasCorta.get(i).getNombre());
+            if (i < rutaMasCorta.size() - 1) {
+                System.out.print(" → ");
+            }
+        }
+        System.out.println("\n   📏 Distancia total: " + String.format("%.1f", distanciaTotal) + " km");
+        System.out.println("   ⏱️  Tiempo estimado de llegada: " +
+                String.format("%.0f", tiempoEstimado) + " minutos");
+
+        // Asignar equipo al desastre
+        equipo.setIntegrantesDisponibles(equipo.getIntegrantesDisponibles() - personalRequerido);
+        equiposAsignados.add(equipo);
+
+        System.out.println("\nASIGNACIÓN EXITOSA:");
+        System.out.println("   • Equipo " + equipo.getTipoEquipo() +
+                " asignado al desastre " + desastre.getNombre());
+        System.out.println("   • Integrantes desplegados: " + personalRequerido);
+        System.out.println("   • Integrantes restantes en base: " +
+                equipo.getIntegrantesDisponibles());
+        System.out.println("   • Estado: En ruta hacia la zona del desastre");
+        System.out.println("═══════════════════════════════════════════════════════════════\n");
     }
 
     public Ruta definirRuta(GrafoDirigido grafo, Ubicacion origen, Ubicacion destino) {

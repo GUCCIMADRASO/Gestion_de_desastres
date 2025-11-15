@@ -27,7 +27,8 @@ public class OperadorEmergencia extends Usuario {
     }
 
     public void coordinarRecursos(Desastre desastre, Equipo equipo) {
-        desastre.asignarEquipo(equipo);
+
+
     }
     public void gestionarEvacuaciones(List<Desastre> desastres) {
         ColaPrioridad<Desastre> colaEvacuacion = new ColaPrioridad<>();

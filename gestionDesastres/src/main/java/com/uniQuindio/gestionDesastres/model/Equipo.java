@@ -4,11 +4,17 @@ public class Equipo {
     private String idEquipo;
     private int integrantesDisponibles;
     private TipoEquipo tipoEquipo;
+    private Ubicacion ubicacion;
 
     public Equipo(String idEquipo, int integrantesDisponibles, TipoEquipo tipoEquipo) {
         this.idEquipo = idEquipo;
         this.integrantesDisponibles = integrantesDisponibles;
         this.tipoEquipo = tipoEquipo;
+        this.ubicacion =  new Ubicacion("U1", "Ubicacion equipo", "5", "10",TipoUbicacion.CENTRO_AYUDA);
+    }
+
+    public Ubicacion getUbicacion() {
+        return ubicacion;
     }
 
     public Equipo(){};

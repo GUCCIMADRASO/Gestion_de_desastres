@@ -63,32 +63,6 @@ public class Desastre implements Comparable<Desastre>{
 
     }
 
-    //metodo para asignarle un equipo al desastre
-    public void asignarEquipo(Equipo equipo){
-
-        int personalRequerido=0;
-        String prioridad=asignarPrioridad();
-        switch (prioridad) {
-            case "Alta" -> personalRequerido = 20;
-            case "Media" -> personalRequerido = 10;
-            case "Baja" -> personalRequerido= 5;
-        }
-        if (equipo.getIntegrantesDisponibles() >= personalRequerido) {
-            equipo.setIntegrantesDisponibles(equipo.getIntegrantesDisponibles() - personalRequerido);
-
-            equiposAsignados.add(equipo);
-
-            System.out.println("Equipo " + equipo.getTipoEquipo() + " asignado al desastre " + nombre + " " +
-                    "Integrantes usados: " + personalRequerido +
-                    ". Restan: " + equipo.getIntegrantesDisponibles());
-        } else {
-            System.out.println("No hay suficientes integrantes en el equipo " +  equipo.getTipoEquipo() +
-                    " para atender el desastre " + nombre + " Requiere: " + personalRequerido +
-            ", disponibles: " + equipo.getIntegrantesDisponibles());
-        }
-
-    }
-
     //metodo para mostrar los equipos asignados
     public void mostrarEquiposAsignados() {
         System.out.println("Equipos asignados al desastre " + nombre);
