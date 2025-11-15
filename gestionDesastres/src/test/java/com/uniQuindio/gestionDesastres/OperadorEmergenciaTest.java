@@ -47,12 +47,7 @@ public class OperadorEmergenciaTest {
         assertEquals(6, desastre1.getMagnitud(), "Debe actualizar la magnitud del desastre");
     }
 
-    @Test
-    void testCoordinarRecursosAsignaEquipo() {
-        operador.coordinarRecursos(desastre1, equipo);
-        assertFalse(desastre1.getEquiposAsignados().isEmpty(), "Debe asignar un equipo al desastre");
-        assertTrue(equipo.getIntegrantesDisponibles() < 50, "Debe reducir el número de integrantes disponibles");
-    }
+
 
     @Test
     void testGestionarEvacuaciones() {

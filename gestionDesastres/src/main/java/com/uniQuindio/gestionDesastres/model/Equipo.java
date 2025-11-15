@@ -43,6 +43,8 @@ public class Equipo {
         this.tipoEquipo = tipoEquipo;
     }
 
+    public void setUbicacion(Ubicacion ubicacion) {this.ubicacion = ubicacion; }
+
     @Override
     public String toString() {
         return "Equipo{" +

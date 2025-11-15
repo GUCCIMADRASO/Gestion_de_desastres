@@ -12,26 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AdministradorTest {
 
-    @Test
-    void manejoRecursos_actualizaCantidadYImprime() {
-        Administrador admin = new Administrador();
-        Recurso recurso = new Recurso("1", "Agua", TipoRecurso.ALIMENTO, 10);
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream originalOut = System.out;
-        System.setOut(new PrintStream(baos));
-
-        try {
-            admin.manejoRecursos(recurso, 5);
-        } finally {
-            System.setOut(originalOut);
-        }
-
-        assertEquals(15, recurso.getCantidad());
-        String salida = baos.toString();
-        assertTrue(salida.contains("Recurso actualizado"));
-        assertTrue(salida.contains("Agua"));
-    }
 
     @Test
     void definirRuta_usaDijkstraYImprimeCamino() {

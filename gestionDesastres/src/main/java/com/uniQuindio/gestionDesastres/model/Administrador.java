@@ -21,10 +21,8 @@ public class Administrador extends Usuario {
     public Administrador() {
         super();
     }
-
-    public void manejoRecursos(Recurso recurso, int cantidad) {
-        recurso.agregarCantidad(cantidad);
-        System.out.println("Recurso actualizado: " + recurso);
+    public void cargarGrafoRutas(GrafoDirigido grafo) {
+        this.grafoRutas = grafo;
     }
 
     public void asignarRecursosConArbol(ArbolDistribucion arbol, List<Recurso> recursosDisponibles) {
@@ -118,8 +116,6 @@ public class Administrador extends Usuario {
             return;
         }
 
-        // ═══════════ CALCULAR RUTA MÁS CORTA ═══════════
-        System.out.println("\n CALCULANDO RUTA MÁS CORTA");
 
         Ubicacion origen = equipo.getUbicacion();
         Ubicacion destino = desastre.getUbicacion();
