@@ -20,6 +20,10 @@ public class Ubicacion {
     public String getId() {
         return id;
     }
+    public String toLineaArchivo() {
+        return String.format("ID: %s | Nombre: %s | Calle: %s | Carrera: %s | Tipo: %s",
+                id, nombre, calle, carrera, tipoUbicacion);
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -51,5 +55,4 @@ public class Ubicacion {
 
     public TipoUbicacion getTipoUbicacion() {return  tipoUbicacion;}
 
-    public void setTipoUbicacion(TipoUbicacion tipoUbicacion) {this.tipoUbicacion=tipoUbicacion;}
 }

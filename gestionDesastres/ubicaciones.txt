@@ -1,0 +1,3 @@
+ID: U1 | Nombre: Zona Norte | Calle: 10 | Carrera: 20 | Tipo: CENTRO_AYUDA
+ID: U2 | Nombre: Zona Sur | Calle: 5 | Carrera: 15 | Tipo: REFUGIO
+ID: U3 | Nombre: Zona Centro | Calle: 8 | Carrera: 12 | Tipo: CENTRO_AYUDA

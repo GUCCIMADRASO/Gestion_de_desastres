@@ -1,0 +1,7 @@
+=== Rutas más cortas desde Zona Norte ===
+Destino: Zona Centro | Distancia: 3,20 km
+Ruta: Zona Norte -> Zona Centro
+---
+Destino: Zona Sur | Distancia: 5,50 km
+Ruta: Zona Norte -> Zona Sur
+---
