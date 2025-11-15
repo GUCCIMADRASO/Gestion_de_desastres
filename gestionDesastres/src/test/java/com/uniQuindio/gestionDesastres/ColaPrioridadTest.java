@@ -1,9 +1,6 @@
 package com.uniQuindio.gestionDesastres;
 
-import com.uniQuindio.gestionDesastres.model.ColaPrioridad;
-import com.uniQuindio.gestionDesastres.model.Desastre;
-import com.uniQuindio.gestionDesastres.model.TipoDesastre;
-import com.uniQuindio.gestionDesastres.model.Ubicacion;
+import com.uniQuindio.gestionDesastres.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,9 +17,9 @@ public class ColaPrioridadTest {
         cola = new ColaPrioridad<>();
 
         // Crear ubicaciones
-        cali = new Ubicacion("U1", "Cali", "5", "10");
-        armenia = new Ubicacion("U2", "Armenia", "12", "8");
-        pereira = new Ubicacion("U3", "Pereira", "9", "4");
+        cali = new Ubicacion("U1", "Cali", "5", "10", TipoUbicacion.CENTRO_AYUDA);
+        armenia = new Ubicacion("U2", "Armenia", "12", "8", TipoUbicacion.CENTRO_AYUDA);
+        pereira = new Ubicacion("U3", "Pereira", "9", "4",TipoUbicacion.REFUGIO);
 
         // Crear desastres asociados a ubicaciones
         Desastre d1 = new Desastre(5, "Inundación", "D1", TipoDesastre.INUNDACION, 800, LocalDate.now(), cali);

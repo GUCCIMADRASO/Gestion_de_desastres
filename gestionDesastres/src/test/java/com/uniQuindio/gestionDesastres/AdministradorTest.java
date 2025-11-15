@@ -37,10 +37,10 @@ public class AdministradorTest {
         Administrador admin = new Administrador();
 
         // Crear ubicaciones
-        Ubicacion a = new Ubicacion("A", "Base", "C1", "R1");
-        Ubicacion b = new Ubicacion("B", "Hospital", "C2", "R2");
-        Ubicacion c = new Ubicacion("C", "Escuela", "C3", "R3");
-        Ubicacion d = new Ubicacion("D", "Zona Segura", "C4", "R4");
+        Ubicacion a = new Ubicacion("A", "Base", "C1", "R1",TipoUbicacion.REFUGIO);
+        Ubicacion b = new Ubicacion("B", "Hospital", "C2", "R2",TipoUbicacion.REFUGIO);
+        Ubicacion c = new Ubicacion("C", "Escuela", "C3", "R3",TipoUbicacion.CENTRO_AYUDA);
+        Ubicacion d = new Ubicacion("D", "Zona Segura", "C4", "R4",TipoUbicacion.CENTRO_AYUDA);
 
         // Crear grafo
         GrafoDirigido grafo = new GrafoDirigido();
@@ -126,8 +126,8 @@ public class AdministradorTest {
         Administrador admin = new Administrador();
 
         // Crear ubicaciones y nodos
-        Ubicacion raizU = new Ubicacion("R", "Centro", "C0", "R0");
-        Ubicacion barrioU = new Ubicacion("B", "Barrio", "C1", "R1");
+        Ubicacion raizU = new Ubicacion("R", "Centro", "C0", "R0",TipoUbicacion.REFUGIO);
+        Ubicacion barrioU = new Ubicacion("B", "Barrio", "C1", "R1",TipoUbicacion.REFUGIO);
 
         NodoDistribucion raiz = new NodoDistribucion(raizU);
         NodoDistribucion barrio = new NodoDistribucion(barrioU);

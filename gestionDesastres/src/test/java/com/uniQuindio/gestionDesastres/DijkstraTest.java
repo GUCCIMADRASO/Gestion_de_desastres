@@ -1,9 +1,6 @@
 package com.uniQuindio.gestionDesastres;
 
-import com.uniQuindio.gestionDesastres.model.Dijkstra;
-import com.uniQuindio.gestionDesastres.model.GrafoDirigido;
-import com.uniQuindio.gestionDesastres.model.Ruta;
-import com.uniQuindio.gestionDesastres.model.Ubicacion;
+import com.uniQuindio.gestionDesastres.model.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
@@ -14,10 +11,10 @@ public class DijkstraTest {
 
     @Test
     void calcularDistancias() {
-        Ubicacion a = new Ubicacion("A","A","C","R");
-        Ubicacion b = new Ubicacion("B","B","C","R");
-        Ubicacion c = new Ubicacion("C","C","C","R");
-        Ubicacion d = new Ubicacion("D","D","C","R");
+        Ubicacion a = new Ubicacion("A","A","C","R", TipoUbicacion.CENTRO_AYUDA);
+        Ubicacion b = new Ubicacion("B","B","C","R",TipoUbicacion.REFUGIO);
+        Ubicacion c = new Ubicacion("C","C","C","R",TipoUbicacion.CENTRO_AYUDA);
+        Ubicacion d = new Ubicacion("D","D","C","R",TipoUbicacion.REFUGIO);
 
         Ruta ab = new Ruta(a, b, 5f);
         Ruta ac = new Ruta(a, c, 10f);

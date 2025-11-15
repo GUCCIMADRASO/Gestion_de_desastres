@@ -72,7 +72,7 @@ public class GestionDesastresTest {
 
     @Test
     void testAgregarYObtenerDesastre() {
-        Ubicacion ubicacion = new Ubicacion("U1", "Armenia", "12", "8");
+        Ubicacion ubicacion = new Ubicacion("U1", "Armenia", "12", "8", TipoUbicacion.REFUGIO);
         Desastre d = new Desastre(5, "Inundación", "D1", TipoDesastre.INUNDACION, 1200, LocalDate.now(), ubicacion);
         assertTrue(gestion.agregarDesastre(d));
         Desastre obtenido = gestion.obtenerDesastrePorId("D1");
@@ -81,7 +81,7 @@ public class GestionDesastresTest {
 
     @Test
     void testActualizarDesastre() {
-        Ubicacion ubicacion = new Ubicacion("U2", "Pereira", "9", "4");
+        Ubicacion ubicacion = new Ubicacion("U2", "Pereira", "9", "4",TipoUbicacion.REFUGIO);
         Desastre d = new Desastre(3, "Incendio", "D2", TipoDesastre.INCENDIO, 400, LocalDate.now(), ubicacion);
         gestion.agregarDesastre(d);
 
@@ -92,7 +92,7 @@ public class GestionDesastresTest {
 
     @Test
     void testEliminarDesastre() {
-        Ubicacion ubicacion = new Ubicacion("U3", "Cali", "5", "10");
+        Ubicacion ubicacion = new Ubicacion("U3", "Cali", "5", "10",TipoUbicacion.REFUGIO);
         Desastre d = new Desastre(2, "Derrumbe", "D3", TipoDesastre.DERRUMBE, 200, LocalDate.now(), ubicacion);
         gestion.agregarDesastre(d);
         assertTrue(gestion.eliminarDesastre("D3"));

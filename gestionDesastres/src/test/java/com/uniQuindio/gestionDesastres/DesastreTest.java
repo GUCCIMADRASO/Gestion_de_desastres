@@ -14,9 +14,9 @@ public class DesastreTest {
     @BeforeEach
     void setUp() {
         // Crear ubicaciones
-        cali = new Ubicacion("U1", "Cali", "5", "10");
-        armenia = new Ubicacion("U2", "Armenia", "12", "8");
-        pereira = new Ubicacion("U3", "Pereira", "9", "4");
+        cali = new Ubicacion("U1", "Cali", "5", "10",TipoUbicacion.CENTRO_AYUDA);
+        armenia = new Ubicacion("U2", "Armenia", "12", "8",TipoUbicacion.CENTRO_AYUDA);
+        pereira = new Ubicacion("U3", "Pereira", "9", "4",TipoUbicacion.CENTRO_AYUDA);
 
         // Crear desastres
         desastre1 = new Desastre(5, "Inundación", "D1", TipoDesastre.INUNDACION, 2000, LocalDate.now(), cali);

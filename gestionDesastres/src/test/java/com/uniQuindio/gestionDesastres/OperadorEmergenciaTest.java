@@ -22,9 +22,9 @@ public class OperadorEmergenciaTest {
 
         // Crear ubicaciones
         ubicaciones = new ArrayList<>();
-        ubicaciones.add(new Ubicacion("U1", "Cali", "5", "10"));
-        ubicaciones.add(new Ubicacion("U2", "Armenia", "12", "8"));
-        ubicaciones.add(new Ubicacion("U3", "Pereira", "9", "4"));
+        ubicaciones.add(new Ubicacion("U1", "Cali", "5", "10",TipoUbicacion.REFUGIO));
+        ubicaciones.add(new Ubicacion("U2", "Armenia", "12", "8",TipoUbicacion.CENTRO_AYUDA));
+        ubicaciones.add(new Ubicacion("U3", "Pereira", "9", "4",TipoUbicacion.REFUGIO));
 
         // Crear desastres
         desastre1 = new Desastre(5, "Inundación", "D1", TipoDesastre.INUNDACION, 1500, LocalDate.now(), ubicaciones.get(0));

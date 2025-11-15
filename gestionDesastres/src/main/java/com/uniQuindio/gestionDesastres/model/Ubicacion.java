@@ -5,12 +5,14 @@ public class Ubicacion {
     private String nombre;
     private String calle;
     private String carrera;
+    private TipoUbicacion tipoUbicacion;
 
-    public Ubicacion(String id, String nombre, String calle, String carrera) {
+    public Ubicacion(String id, String nombre, String calle, String carrera, TipoUbicacion tipoUbicacion) {
         this.id = id;
         this.nombre = nombre;
         this.calle = calle;
         this.carrera = carrera;
+        this.tipoUbicacion = tipoUbicacion;
     }
 
     public  Ubicacion() {}
@@ -46,4 +48,8 @@ public class Ubicacion {
     public void setCarrera(String carrera) {
         this.carrera = carrera;
     }
+
+    public TipoUbicacion getTipoUbicacion() {return  tipoUbicacion;}
+
+    public void setTipoUbicacion(TipoUbicacion tipoUbicacion) {this.tipoUbicacion=tipoUbicacion;}
 }
