@@ -120,4 +120,52 @@ public class AdministradorTest {
         assertTrue(salida.contains("Incendio"));
         assertTrue(salida.contains("Inundación"));
     }
+    
+    @Test
+    void asignarRecursosConArbol_asignaYSumaConsumidos() {
+        Administrador admin = new Administrador();
+
+        // Crear ubicaciones y nodos
+        Ubicacion raizU = new Ubicacion("R", "Centro", "C0", "R0");
+        Ubicacion barrioU = new Ubicacion("B", "Barrio", "C1", "R1");
+
+        NodoDistribucion raiz = new NodoDistribucion(raizU);
+        NodoDistribucion barrio = new NodoDistribucion(barrioU);
+        raiz.agregarHijo(barrio);
+
+        // Necesidades: post-order -> primero 'barrio', luego 'raiz'
+        raiz.agregarNecesidad(TipoRecurso.ALIMENTO, 50);
+        barrio.agregarNecesidad(TipoRecurso.ALIMENTO, 30);
+        barrio.agregarNecesidad(TipoRecurso.MEDICAMENTO, 10);
+
+        ArbolDistribucion arbol = new ArbolDistribucion(raiz);
+
+        // Recursos disponibles
+        Recurso comida = new Recurso("10", "Comida", TipoRecurso.ALIMENTO, 60);
+        Recurso medicina = new Recurso("11", "Medicina", TipoRecurso.MEDICAMENTO, 5);
+        List<Recurso> recursos = new ArrayList<>(Arrays.asList(comida, medicina));
+
+        // Capturar salida
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(baos));
+
+        try {
+            admin.asignarRecursosConArbol(arbol, recursos);
+        } finally {
+            System.setOut(originalOut);
+        }
+
+        // Verificar consumos esperados:
+        // ALIMENTO: 60 disponibles -> barrio 30, raiz 30 (queda 0)
+        // MEDICAMENTO: 5 disponibles -> barrio requiere 10 -> consume 5 (queda 0)
+        assertEquals(0, comida.getCantidad());
+        assertEquals(0, medicina.getCantidad());
+
+        String salida = baos.toString();
+        assertTrue(salida.contains("Nodo " + raizU.getNombre()) || salida.contains("Nodo Centro"));
+        assertTrue(salida.contains("Nodo " + barrioU.getNombre()) || salida.contains("Nodo Barrio"));
+        assertTrue(salida.contains("Recursos restantes"));
+        assertTrue(salida.contains("asignado") || salida.contains("asignado:"));
+    }
 }
