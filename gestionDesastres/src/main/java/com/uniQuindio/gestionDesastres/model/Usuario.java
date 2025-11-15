@@ -22,6 +22,7 @@ public class Usuario {
         if (this.email.equals(email) && this.contrasena.equals(contrasena)) {
             sesionActiva = true;
             System.out.println(nombre + " ha iniciado sesión.");
+            RegistroArchivo.registrarInicioSesion(nombre, email);
             return true;
         }
         System.out.println("Error de autenticación.");

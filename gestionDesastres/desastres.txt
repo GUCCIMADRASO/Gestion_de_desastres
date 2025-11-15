@@ -1,0 +1,2 @@
+ID: D1 | Nombre: Incendio Forestal | Tipo: INCENDIO | Magnitud: 4 | Personas: 1200 | Fecha: 2025-11-15 | Ubicacion: 10
+ID: D2 | Nombre: Inundación Barrio | Tipo: INUNDACION | Magnitud: 2 | Personas: 350 | Fecha: 2025-11-15 | Ubicacion: 10

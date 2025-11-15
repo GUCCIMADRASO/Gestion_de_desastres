@@ -1,0 +1,3 @@
+ID: R1 | Nombre: Agua | Tipo: ALIMENTO | Cantidad: 100
+ID: R2 | Nombre: Analgésicos | Tipo: MEDICAMENTO | Cantidad: 50
+ID: R3 | Nombre: Arroz | Tipo: ALIMENTO | Cantidad: 200
