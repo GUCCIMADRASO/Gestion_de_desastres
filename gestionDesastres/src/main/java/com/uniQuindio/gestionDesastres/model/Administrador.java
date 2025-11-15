@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ public class Administrador extends Usuario {
     public Administrador() {
         super();
     }
+
     public void cargarGrafoRutas(GrafoNoDirigido grafo) {
         this.grafoRutas = grafo;
     }
@@ -82,6 +84,7 @@ public class Administrador extends Usuario {
             System.out.println("→ Asignación completada para el desastre: " + desastre.getNombre());
         }
     }
+
     //metodo para asignarle un equipo al desastre
     public void asignarEquipo(Equipo equipo, Desastre desastre) {
         List<Equipo> equiposAsignados = desastre.getEquiposAsignados();
@@ -163,6 +166,7 @@ public class Administrador extends Usuario {
         System.out.println("   • Estado: En ruta hacia la zona del desastre");
         System.out.println("═══════════════════════════════════════════════════════════════\n");
     }
+
     public Ruta definirRuta(GrafoNoDirigido grafo, Ubicacion origen, Ubicacion destino) {
 
         Map<Ubicacion, Float> distancias = Dijkstra.calcularDistancias(grafo, origen);
@@ -192,27 +196,47 @@ public class Administrador extends Usuario {
     }
 
     public void generarReporte(List<Desastre> desastres) {
-        String ruta = "C:\\Users\\Administrator\\Downloads\\reporte.txt";
-        File file = new File(ruta);
+        // Ruta del archivo
+        String ruta = System.getProperty("user.home") + File.separator + "Downloads" + File.separator + "reporte_desastres.txt";
+        File archivo = new File(ruta);
 
         try (BufferedWriter writer = Files.newBufferedWriter(
-                file.toPath(),
+                archivo.toPath(),
                 StandardCharsets.UTF_8,
                 StandardOpenOption.CREATE,
                 StandardOpenOption.TRUNCATE_EXISTING)) {
 
-            writer.write("Reporte de Desastres Atendidos\n");
-            for (Desastre d : desastres) {
-                int equipos = d.getEquiposAsignados() != null ? d.getEquiposAsignados().size() : 0;
-                writer.write(String.format("Desastre: %s | Prioridad: %s | Equipos: %d | Recursos: %d%n",
-                        d.getNombre(),
-                        d.asignarPrioridad(),
-                        equipos,
-                        d.getPersonasAfectadas()));
+            writer.write("═══════════════════════════════════════════════════════════════\n");
+            writer.write("                  REPORTE DE DESASTRES ATENDIDOS\n");
+            writer.write("═══════════════════════════════════════════════════════════════\n\n");
+
+            if (desastres == null || desastres.isEmpty()) {
+                writer.write("No se han registrado desastres atendidos.\n");
+            } else {
+                for (Desastre d : desastres) {
+                    int equiposAsignados = d.getEquiposAsignados() != null ? d.getEquiposAsignados().size() : 0;
+                    String prioridad = d.asignarPrioridad();
+
+                    writer.write(String.format("• Desastre: %s\n", d.getNombre()));
+                    writer.write(String.format("  - ID: %s\n", d.getIdDesastre()));
+                    writer.write(String.format("  - Tipo: %s\n", d.getTipoDesastre()));
+                    writer.write(String.format("  - Ubicación: %s\n", d.getUbicacion().getNombre()));
+                    writer.write(String.format("  - Fecha: %s\n", d.getFecha()));
+                    writer.write(String.format("  - Personas afectadas: %d\n", d.getPersonasAfectadas()));
+                    writer.write(String.format("  - Prioridad: %s\n", prioridad));
+                    writer.write(String.format("  - Equipos asignados: %d\n", equiposAsignados));
+                    writer.write("---------------------------------------------------------------\n");
+                }
             }
-            System.out.println("Reporte guardado en: " + file.getAbsolutePath());
+
+            writer.write("\nGenerado por el sistema de gestión de emergencias.\n");
+            writer.write("Fecha de generación: " + LocalDate.now() + "\n");
+
+            System.out.println("Reporte generado exitosamente en: " + archivo.getAbsolutePath());
+
         } catch (IOException e) {
-            System.err.println("Error guardando reporte: " + e.getMessage());
+            System.err.println("Error al guardar el reporte: " + e.getMessage());
         }
+
     }
 }
