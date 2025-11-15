@@ -1,5 +1,11 @@
 package com.uniQuindio.gestionDesastres.model;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.Map;
 
@@ -104,14 +110,28 @@ public class Administrador extends Usuario {
         return ruta;
     }
 
-
     public void generarReporte(List<Desastre> desastres) {
-        System.out.println("Reporte de Desastres Atendidos");
-        for (Desastre d : desastres) {
-            System.out.println("Desastre: " + d.getNombre() +
-                    " | Prioridad: " + d.asignarPrioridad() +
-                    " | Equipos: " + d.getEquiposAsignados().size()+
-                    " | Recursos: " + d.getPersonasAfectadas());
+        String ruta = "C:\\Users\\Administrator\\Downloads\\reporte.txt";
+        File file = new File(ruta);
+
+        try (BufferedWriter writer = Files.newBufferedWriter(
+                file.toPath(),
+                StandardCharsets.UTF_8,
+                StandardOpenOption.CREATE,
+                StandardOpenOption.TRUNCATE_EXISTING)) {
+
+            writer.write("Reporte de Desastres Atendidos\n");
+            for (Desastre d : desastres) {
+                int equipos = d.getEquiposAsignados() != null ? d.getEquiposAsignados().size() : 0;
+                writer.write(String.format("Desastre: %s | Prioridad: %s | Equipos: %d | Recursos: %d%n",
+                        d.getNombre(),
+                        d.asignarPrioridad(),
+                        equipos,
+                        d.getPersonasAfectadas()));
+            }
+            System.out.println("Reporte guardado en: " + file.getAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Error guardando reporte: " + e.getMessage());
         }
     }
 }
