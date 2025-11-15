@@ -33,4 +33,33 @@ public class GrafoDirigido {
             System.out.println();
         }
     }
+    public Ruta obtenerRuta(Ubicacion origen, Ubicacion destino) {
+        List<Ruta> rutas = obtenerRutasDesde(origen);
+        for (Ruta r : rutas) {
+            if (r.getDestino().equals(destino)) {
+                return r;
+            }
+        }
+        return null;
+    }
+
+    //calcula la ruta mas corta entre dos ubicaciones usando el algoritmo de Dijkstra
+    public List<Ubicacion> calcularRutaMasCorta(Ubicacion origen, Ubicacion destino) {
+        return Dijkstra.caminoMasCorto(this, origen, destino);
+    }
+
+    public Map<Ubicacion, Float> calcularTodasDistancias(Ubicacion origen) {
+        return Dijkstra.calcularDistancias(this, origen);
+    }
+
+    // Mostrar todas las rutas desde una ubicación
+    public void mostrarRutasDesde(Ubicacion origen) {
+        System.out.println("\n=== Rutas desde " + origen.getNombre() + " ===");
+        List<Ruta> rutas = obtenerRutasDesde(origen);
+        if (rutas.isEmpty()) {
+            System.out.println("No hay rutas disponibles");
+        } else {
+            rutas.forEach(r -> System.out.println("  - " + r));
+        }
+    }
 }
