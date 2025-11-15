@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.time.LocalDate;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,7 +24,7 @@ public class AdministradorTest {
         Ubicacion d = new Ubicacion("D", "Zona Segura", "C4", "R4",TipoUbicacion.CENTRO_AYUDA);
 
         // Crear grafo
-        GrafoDirigido grafo = new GrafoDirigido();
+        GrafoNoDirigido grafo = new GrafoNoDirigido();
         grafo.agregarRuta(new Ruta(a, b, 5f));
         grafo.agregarRuta(new Ruta(b, c, 3f));
         grafo.agregarRuta(new Ruta(a, c, 10f));

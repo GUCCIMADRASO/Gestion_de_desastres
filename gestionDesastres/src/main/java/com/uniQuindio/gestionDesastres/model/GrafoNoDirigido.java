@@ -2,7 +2,7 @@ package com.uniQuindio.gestionDesastres.model;
 
 import java.util.*;
 
-public class GrafoDirigido {
+public class GrafoNoDirigido {
     private Map<Ubicacion, List<Ruta>> adyacencias = new HashMap<>();
 
     public void agregarUbicacion(Ubicacion ubicacion) {
@@ -12,7 +12,14 @@ public class GrafoDirigido {
     public void agregarRuta(Ruta ruta) {
         agregarUbicacion(ruta.getOrigen());
         agregarUbicacion(ruta.getDestino());
+
+        // Agrega la ruta original
         adyacencias.get(ruta.getOrigen()).add(ruta);
+
+        // Agrega la ruta inversa automáticamente
+        Ruta inversa = new Ruta(ruta.getDestino(), ruta.getOrigen(), ruta.getDistancia());
+        adyacencias.get(ruta.getDestino()).add(inversa);
+
     }
 
     public List<Ruta> obtenerRutasDesde(Ubicacion origen) {

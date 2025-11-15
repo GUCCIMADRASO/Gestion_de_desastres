@@ -76,7 +76,7 @@ public class Main {
         }
 
         // Grafo para rutas
-        GrafoDirigido grafo = new GrafoDirigido();
+        GrafoNoDirigido grafo = new GrafoNoDirigido();
         grafo.agregarRuta(new Ruta(u1, u2, 5.5f));
         grafo.agregarRuta(new Ruta(u2, u3, 4.0f));
         grafo.agregarRuta(new Ruta(u1, u3, 3.2f));
@@ -92,6 +92,7 @@ public class Main {
         eq3.setUbicacion(u1);
         List<Equipo> equipos = Arrays.asList(eq1, eq2, eq3);
         RegistroArchivo.guardarEquipos(equipos);
+
 
         // Asignar equipos a desastres
         System.out.println("\n--- Asignación de equipos ---");
@@ -133,6 +134,30 @@ public class Main {
             }
         } catch (IOException e) {
             System.out.println("No se pudo leer " + nombreArchivo + ": " + e.getMessage());
+        }
+    }
+    //prueba del algoritmo de dijkstra
+    public static void main2(String[] args) {
+        Ubicacion zonaNorte = new Ubicacion("Z1", "Zona Norte", "Calle 1", "Carrera 1", TipoUbicacion.CENTRO_AYUDA);
+        Ubicacion zonaCentro = new Ubicacion("Z2", "Zona Centro", "Calle 2", "Carrera 2", TipoUbicacion.REFUGIO);
+        Ubicacion zonaSur = new Ubicacion("Z3", "Zona Sur", "Calle 3", "Carrera 3", TipoUbicacion.REFUGIO);
+
+        Ruta ruta1 = new Ruta(zonaNorte, zonaCentro, 10f); // 10 km
+        Ruta ruta2 = new Ruta(zonaCentro, zonaSur, 15f);   // 15 km
+        Ruta ruta3 = new Ruta(zonaNorte, zonaSur, 30f);    // 30 km directo
+
+        GrafoNoDirigido grafo = new GrafoNoDirigido();
+        grafo.agregarRuta(ruta1);
+        grafo.agregarRuta(ruta2);
+        grafo.agregarRuta(ruta3);
+
+        Map<Ubicacion, Float> distancias = Dijkstra.calcularDistancias(grafo, zonaNorte);
+        System.out.println("Distancia a Zona Sur: " + distancias.get(zonaSur)); // Esperado: 25.0
+
+        List<Ubicacion> camino = Dijkstra.caminoMasCorto(grafo, zonaNorte, zonaSur);
+        System.out.print("Camino más corto: ");
+        for (Ubicacion u : camino) {
+            System.out.print(u.getNombre() + " → ");
         }
     }
 }

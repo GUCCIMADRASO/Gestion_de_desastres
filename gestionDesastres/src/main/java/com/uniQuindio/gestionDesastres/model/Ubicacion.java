@@ -1,5 +1,7 @@
 package com.uniQuindio.gestionDesastres.model;
 
+import java.util.Objects;
+
 public class Ubicacion {
     private String id;
     private String nombre;
@@ -24,6 +26,19 @@ public class Ubicacion {
         return String.format("ID: %s | Nombre: %s | Calle: %s | Carrera: %s | Tipo: %s",
                 id, nombre, calle, carrera, tipoUbicacion);
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Ubicacion other = (Ubicacion) obj;
+        return Objects.equals(id, other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
 
     public void setId(String id) {
         this.id = id;

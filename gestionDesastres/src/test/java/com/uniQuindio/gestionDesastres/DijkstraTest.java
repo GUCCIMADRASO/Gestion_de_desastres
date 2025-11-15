@@ -3,9 +3,8 @@ package com.uniQuindio.gestionDesastres;
 import com.uniQuindio.gestionDesastres.model.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.List;
+
 import java.util.Map;
-import java.util.Arrays;
 
 public class DijkstraTest {
 
@@ -22,7 +21,7 @@ public class DijkstraTest {
         Ruta bd = new Ruta(b, d, 11f);
         Ruta cd = new Ruta(c, d, 3f);
 
-        GrafoDirigido grafo = new GrafoDirigido();
+        GrafoNoDirigido grafo = new GrafoNoDirigido();
         grafo.agregarRuta(ab);
         grafo.agregarRuta(ac);
         grafo.agregarRuta(bc);

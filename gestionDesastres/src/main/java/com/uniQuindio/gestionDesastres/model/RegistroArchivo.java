@@ -90,7 +90,7 @@ public final class RegistroArchivo {
         }
     }
 
-    public static void guardarTodasRutasCortas(GrafoDirigido grafo, Ubicacion origen) {
+    public static void guardarTodasRutasCortas(GrafoNoDirigido grafo, Ubicacion origen) {
         try (FileWriter writer = new FileWriter(ARCHIVO_TXT_RUTAS, false)) {
             writer.write("=== Rutas más cortas desde " + origen.getNombre() + " ===" + System.lineSeparator());
 

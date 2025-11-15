@@ -10,18 +10,18 @@ import java.util.List;
 import java.util.Map;
 
 public class Administrador extends Usuario {
-    private GrafoDirigido grafoRutas;
+    private GrafoNoDirigido grafoRutas;
 
     public Administrador(String nombre, String id, String email, String contrasena) {
         super(nombre, id, email, contrasena);
-        this.grafoRutas = new GrafoDirigido();
+        this.grafoRutas = new GrafoNoDirigido();
 
     }
 
     public Administrador() {
         super();
     }
-    public void cargarGrafoRutas(GrafoDirigido grafo) {
+    public void cargarGrafoRutas(GrafoNoDirigido grafo) {
         this.grafoRutas = grafo;
     }
 
@@ -86,84 +86,84 @@ public class Administrador extends Usuario {
     public void asignarEquipo(Equipo equipo, Desastre desastre) {
         List<Equipo> equiposAsignados = desastre.getEquiposAsignados();
 
-        // Calcular personal requerido según prioridad
-        int personalRequerido = 0;
+        // 1. Calcular personal requerido según prioridad
         String prioridad = desastre.asignarPrioridad();
-        switch (prioridad) {
-            case "Alta" -> personalRequerido = 20;
-            case "Media" -> personalRequerido = 10;
-            case "Baja" -> personalRequerido = 5;
-        }
+        int personalRequerido = switch (prioridad) {
+            case "Alta" -> 20;
+            case "Media" -> 10;
+            case "Baja" -> 5;
+            default -> 0;
+        };
 
-        System.out.println("\n INFORMACIÓN DEL DESASTRE:");
+        // 2. Mostrar información del desastre y del equipo
+        System.out.println("\nINFORMACIÓN DEL DESASTRE:");
         System.out.println("   • Desastre: " + desastre.getNombre());
         System.out.println("   • Ubicación: " + desastre.getUbicacion().getNombre());
         System.out.println("   • Prioridad: " + prioridad);
         System.out.println("   • Personal requerido: " + personalRequerido + " integrantes");
 
-        System.out.println("\n INFORMACIÓN DEL EQUIPO:");
+        System.out.println("\nINFORMACIÓN DEL EQUIPO:");
         System.out.println("   • Tipo: " + equipo.getTipoEquipo());
         System.out.println("   • Disponibles: " + equipo.getIntegrantesDisponibles() + " integrantes");
 
-        // Verificar disponibilidad de personal
+        // 3. Verificar disponibilidad de personal
         if (equipo.getIntegrantesDisponibles() < personalRequerido) {
-            System.out.println("\n ASIGNACIÓN RECHAZADA:");
-            System.out.println("   No hay suficientes integrantes en el equipo " +
-                    equipo.getTipoEquipo() +
+            System.out.println("\nASIGNACIÓN RECHAZADA:");
+            System.out.println("   No hay suficientes integrantes en el equipo " + equipo.getTipoEquipo() +
                     " para atender el desastre " + desastre.getNombre());
-            System.out.println("   Requiere: " + personalRequerido +
-                    " | Disponibles: " + equipo.getIntegrantesDisponibles());
+            System.out.println("   Requiere: " + personalRequerido + " | Disponibles: " + equipo.getIntegrantesDisponibles());
             return;
         }
 
-
+        // 4. Calcular ruta más corta usando Dijkstra
         Ubicacion origen = equipo.getUbicacion();
         Ubicacion destino = desastre.getUbicacion();
-
-        // Usar algoritmo de Dijkstra para encontrar la ruta más corta
         List<Ubicacion> rutaMasCorta = Dijkstra.caminoMasCorto(grafoRutas, origen, destino);
 
-        if (rutaMasCorta.isEmpty()) {
-            System.out.println("No existe ruta disponible desde " +
-                    origen.getNombre() + " hasta " + destino.getNombre());
-            System.out.println("No se puede asignar el equipo sin ruta de acceso");
+        if (rutaMasCorta == null || rutaMasCorta.isEmpty()) {
+            System.out.println("\nERROR DE RUTA:");
+            System.out.println("   No existe ruta disponible desde " + origen.getNombre() + " hasta " + destino.getNombre());
+            System.out.println("   No se puede asignar el equipo sin ruta de acceso");
             return;
         }
 
-        // Calcular distancia total
+        // 5. Calcular distancia total y tiempo estimado
         Map<Ubicacion, Float> distancias = Dijkstra.calcularDistancias(grafoRutas, origen);
-        float distanciaTotal = distancias.get(destino);
+        Float distanciaTotal = distancias.get(destino);
 
-        // Calcular tiempo estimado (asumiendo velocidad promedio de 40 km/h)
-        float tiempoEstimado = (distanciaTotal / 40) * 60; // en minutos
+        if (distanciaTotal == null) {
+            System.out.println("\nERROR DE DISTANCIA:");
+            System.out.println("   No se pudo calcular la distancia entre " + origen.getNombre() + " y " + destino.getNombre());
+            return;
+        }
 
-        System.out.println("   ✓ Ruta encontrada:");
-        System.out.print("");
+        float velocidadPromedioKmH = 40.0f;
+        float tiempoEstimadoMin = (distanciaTotal / velocidadPromedioKmH) * 60;
+
+        // 6. Mostrar ruta y tiempo estimado
+        System.out.println("\n✓ Ruta encontrada:");
         for (int i = 0; i < rutaMasCorta.size(); i++) {
             System.out.print(rutaMasCorta.get(i).getNombre());
             if (i < rutaMasCorta.size() - 1) {
                 System.out.print(" → ");
             }
         }
-        System.out.println("\n   📏 Distancia total: " + String.format("%.1f", distanciaTotal) + " km");
-        System.out.println("   ⏱️  Tiempo estimado de llegada: " +
-                String.format("%.0f", tiempoEstimado) + " minutos");
+        System.out.println("\nDistancia total: " + String.format("%.1f", distanciaTotal) + " km");
+        System.out.println("Tiempo estimado de llegada: " + String.format("%.0f", tiempoEstimadoMin) + " minutos");
 
-        // Asignar equipo al desastre
+        // 7. Asignar equipo al desastre
         equipo.setIntegrantesDisponibles(equipo.getIntegrantesDisponibles() - personalRequerido);
         equiposAsignados.add(equipo);
 
+        // 8. Confirmación de asignación
         System.out.println("\nASIGNACIÓN EXITOSA:");
-        System.out.println("   • Equipo " + equipo.getTipoEquipo() +
-                " asignado al desastre " + desastre.getNombre());
+        System.out.println("   • Equipo " + equipo.getTipoEquipo() + " asignado al desastre " + desastre.getNombre());
         System.out.println("   • Integrantes desplegados: " + personalRequerido);
-        System.out.println("   • Integrantes restantes en base: " +
-                equipo.getIntegrantesDisponibles());
+        System.out.println("   • Integrantes restantes en base: " + equipo.getIntegrantesDisponibles());
         System.out.println("   • Estado: En ruta hacia la zona del desastre");
         System.out.println("═══════════════════════════════════════════════════════════════\n");
     }
-
-    public Ruta definirRuta(GrafoDirigido grafo, Ubicacion origen, Ubicacion destino) {
+    public Ruta definirRuta(GrafoNoDirigido grafo, Ubicacion origen, Ubicacion destino) {
 
         Map<Ubicacion, Float> distancias = Dijkstra.calcularDistancias(grafo, origen);
         Float distanciaMasCorta = distancias.get(destino);

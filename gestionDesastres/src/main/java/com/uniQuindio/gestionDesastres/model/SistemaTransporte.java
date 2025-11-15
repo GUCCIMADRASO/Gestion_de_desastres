@@ -4,15 +4,15 @@ import java.util.List;
 
 public class SistemaTransporte {
     private MapaRecursos mapaRecursos;
-    private GrafoDirigido grafoRutas;
+    private GrafoNoDirigido grafoRutas;
 
     public SistemaTransporte() {
         this.mapaRecursos = new MapaRecursos();
-        this.grafoRutas = new GrafoDirigido();
+        this.grafoRutas = new GrafoNoDirigido();
     }
 
     public MapaRecursos getMapaRecursos() { return mapaRecursos; }
-    public GrafoDirigido getGrafoRutas() { return grafoRutas; }
+    public GrafoNoDirigido getGrafoRutas() { return grafoRutas; }
 
     // Transportar recursos siguiendo la ruta más corta
     public boolean transportarRecursos(Ubicacion origen, Ubicacion destino,
