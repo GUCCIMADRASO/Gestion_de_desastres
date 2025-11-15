@@ -18,6 +18,19 @@ public class Administrador extends Usuario {
         System.out.println("Recurso actualizado: " + recurso);
     }
 
+    public void asignarRecursosConArbol(ArbolDistribucion arbol, List<Recurso> recursosDisponibles) {
+        if (arbol == null) {
+            System.out.println("Arbol de distribución nulo.");
+            return;
+        }
+        arbol.imprimirEstructura();
+        arbol.asignarRecursos(recursosDisponibles);
+        System.out.println("Recursos restantes:");
+        for (Recurso r : recursosDisponibles) {
+            System.out.println(" - " + r.getNombre() + ": " + r.getCantidad());
+        }
+    }
+
     public void asignarRecursos(ColaPrioridad<Desastre> colaPrioridad, List<Recurso> recursosDisponibles) {
         System.out.println("=== ASIGNACIÓN DE RECURSOS SEGÚN PRIORIDAD ===");
 
