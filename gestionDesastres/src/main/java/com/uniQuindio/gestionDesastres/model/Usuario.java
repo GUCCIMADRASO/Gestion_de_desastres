@@ -1,3 +1,4 @@
+// src/main/java/com/uniQuindio/gestionDesastres/model/Usuario.java
 package com.uniQuindio.gestionDesastres.model;
 
 public class Usuario {
@@ -5,7 +6,6 @@ public class Usuario {
     private String nombre;
     private String email;
     private String contrasena;
-    private boolean sesionActiva = false;
 
     public Usuario(String id, String nombre, String email, String contrasena) {
         this.id = id;
@@ -14,43 +14,11 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
-    public Usuario() {
+    public Usuario() {}
 
-    }
-
-    public boolean iniciarSesion(String email, String contrasena) {
-        if (this.email.equals(email) && this.contrasena.equals(contrasena)) {
-            sesionActiva = true;
-            System.out.println(nombre + " ha iniciado sesión.");
-            RegistroArchivo.registrarInicioSesion(nombre, email);
-            return true;
-        }
-        System.out.println("Error de autenticación.");
-        return false;
-    }
-
-    public void cerrarSesion() {
-        if (sesionActiva) {
-            sesionActiva = false;
-            System.out.println(nombre + " ha cerrado sesión.");
-        } else {
-            System.out.println("No hay sesión activa.");
-        }
-    }
-
-    public boolean isSesionActiva() {
-        return sesionActiva;
-    }
-    public String getContrasena() {
-        return contrasena;
-    }
-    public String GetEmail() {
-        return email;
-    }
-    public String getNombre() {
-        return nombre;
-    }
-    public String getId() {
-        return id;
-    }
+    // Getters
+    public String getId() { return id; }
+    public String getNombre() { return nombre; }
+    public String getEmail() { return email; }
+    public String getContrasena() { return contrasena; }
 }

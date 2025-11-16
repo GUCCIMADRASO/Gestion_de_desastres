@@ -1,5 +1,6 @@
 package com.uniQuindio.gestionDesastres.model;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -7,12 +8,24 @@ import java.util.List;
 import java.util.Map;
 
 public final class RegistroArchivo {
-    private static final String ARCHIVO_TXT_SESIONES = "inicios_sesion.txt";
-    private static final String ARCHIVO_TXT_RECURSOS = "recursos.txt";
-    private static final String ARCHIVO_TXT_DESASTRES = "desastres.txt";
-    private static final String ARCHIVO_TXT_UBICACIONES = "ubicaciones.txt";
-    private static final String ARCHIVO_TXT_EQUIPOS = "equipos.txt";
-    private static final String ARCHIVO_TXT_RUTAS = "rutas_cortas.txt";
+    // Directorio para todos los archivos de datos
+    private static final String DIRECTORIO_DATOS = "datos";
+
+    private static final String ARCHIVO_TXT_SESIONES = DIRECTORIO_DATOS + File.separator + "inicios_sesion.txt";
+    private static final String ARCHIVO_TXT_RECURSOS = DIRECTORIO_DATOS + File.separator + "recursos.txt";
+    private static final String ARCHIVO_TXT_DESASTRES = DIRECTORIO_DATOS + File.separator + "desastres.txt";
+    private static final String ARCHIVO_TXT_UBICACIONES = DIRECTORIO_DATOS + File.separator + "ubicaciones.txt";
+    private static final String ARCHIVO_TXT_EQUIPOS = DIRECTORIO_DATOS + File.separator + "equipos.txt";
+    private static final String ARCHIVO_TXT_RUTAS = DIRECTORIO_DATOS + File.separator + "rutas_cortas.txt";
+    private static final String ARCHIVO_TXT_USUARIOS = DIRECTORIO_DATOS + File.separator + "usuarios.txt";
+
+    static {
+        // Crear el directorio de datos si no existe
+        File directorio = new File(DIRECTORIO_DATOS);
+        if (!directorio.exists()) {
+            directorio.mkdirs();
+        }
+    }
 
     private RegistroArchivo() {}
 
@@ -112,6 +125,16 @@ public final class RegistroArchivo {
                     }
                 }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void guardarUsuario(Usuario usuario) {
+        String registro = String.format("[USUARIO] ID: %s | Nombre: %s | Email: %s | Contraseña: %s%n",
+                usuario.getId(), usuario.getNombre(), usuario.getEmail(), usuario.getContrasena());
+        try (FileWriter writer = new FileWriter(ARCHIVO_TXT_USUARIOS, true)) {
+            writer.write(registro);
         } catch (IOException e) {
             e.printStackTrace();
         }

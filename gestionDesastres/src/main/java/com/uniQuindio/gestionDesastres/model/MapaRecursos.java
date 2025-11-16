@@ -1,8 +1,6 @@
 package com.uniQuindio.gestionDesastres.model;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class MapaRecursos {
 
@@ -48,7 +46,21 @@ public class MapaRecursos {
     public boolean consumirRecurso(Ubicacion ubicacion, TipoRecurso tipo, int cantidad) {
         Recurso recurso = obtenerRecurso(ubicacion, tipo);
         if (recurso == null) return false;
-        return recurso.consumir(cantidad);
+
+        boolean resultado = recurso.consumir(cantidad);
+
+        if (resultado) {
+            // Obtener todos los recursos actualizados del mapa
+            List<Recurso> todosLosRecursos = new ArrayList<>();
+            for (Map<TipoRecurso, Recurso> recursosUbicacion : mapaRecursos.values()) {
+                todosLosRecursos.addAll(recursosUbicacion.values());
+            }
+
+            // Guardar en el archivo
+            RegistroArchivo.guardarRecursos(todosLosRecursos);
+        }
+
+        return resultado;
     }
 
     // Transferir recurso entre ubicaciones
@@ -64,11 +76,20 @@ public class MapaRecursos {
                         cantidad
                 );
                 agregarRecurso(destino, nuevo);
+
+                // Guardar cambios en archivo
+                List<Recurso> todosLosRecursos = new ArrayList<>();
+                for (Map<TipoRecurso, Recurso> recursosUbicacion : mapaRecursos.values()) {
+                    todosLosRecursos.addAll(recursosUbicacion.values());
+                }
+                RegistroArchivo.guardarRecursos(todosLosRecursos);
+
                 return true;
             }
         }
         return false;
     }
+
 
     // Mostrar inventario de una ubicación
     public void mostrarInventario(Ubicacion ubicacion) {
